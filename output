@@ -1,0 +1,129 @@
+SQL> create table client(srno int, name varchar(20));
+
+Table created.
+
+SQL> create table Audit_t as select * from client;
+
+Table created.
+
+SQL> insert into client (srno,name) values (101,'Mannan');
+
+1 row created.
+
+SQL> insert into client (srno,name) values (102,'Pratik');
+
+1 row created.
+
+SQL> insert into client (srno,name) values (103,'Harish');
+
+1 row created.
+
+SQL> @C:\Users\System05\Desktop\sqlplus\trigger\update.sql
+
+Trigger created.
+
+SQL> select * from client;
+
+      SRNO NAME
+---------- --------------------
+       101 Mannan
+       102 Pratik
+       103 Harish
+
+SQL> update client set srno = 103 where name = 'vedant';
+
+1 row updated.
+
+SQL> select * from client;
+
+      SRNO NAME
+---------- --------------------
+       101 Mannan
+       102 Pratik
+       103 vedant
+
+SQL> select * from Audit_t;
+
+      SRNO NAME
+---------- --------------------
+       102 Pratik
+
+SQL> delete from client where srno = 102;
+
+1 row deleted.
+
+SQL> select * from Audit_t;
+
+      SRNO NAME
+---------- --------------------
+       102 Pratik
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create table insertbackup as select * from client;
+
+Table created.
+
+SQL> @C:\Users\System05\Desktop\sqlplus\trigger\update.sql
+
+Trigger created.
+
+SQL> select * from insertbackup;
+
+      SRNO NAME
+---------- --------------------
+       101 Mannan
+       103 vedant
+
+SQL> insert into client values(104,'aditya');
+
+1 row created.
+
+SQL> select * from Audit_t;
+
+      SRNO NAME
+---------- --------------------
+       102 Mannan
+       102 tejas
+
+SQL> select * from client;
+
+      SRNO NAME
+---------- --------------------
+       101 Mannan
+       103 vedant
+       104 aditya
+
+SQL> @C:\Users\System05\Desktop\sqlplus\trigger\update.sql
+
+Trigger created.
+
+SQL> select * from client;
+
+      SRNO NAME
+---------- --------------------
+       101 Sumit
+       103 Mannan
+       104 aditya
+
+SQL> select * from Audit_t;
+
+      SRNO NAME
+---------- --------------------
+       102 Pratik
+
+SQL> select * from insertbackup;
+
+      SRNO NAME
+---------- --------------------
+       101 Mannan
+       103 vedant
+       104 aditya
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
